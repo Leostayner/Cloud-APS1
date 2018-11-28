@@ -88,7 +88,7 @@ def check(client, ec2, n_intances = 3):
         for time in range(1000):
             try:
                 rq = requests.get(edp)
-                if(rq.text == 200):
+                if(rq.status_code == 200):
                     flag = True
                     break      
 
@@ -101,9 +101,8 @@ def check(client, ec2, n_intances = 3):
 
         if (len(list_ids) < n_intances):
             instance = create_instance(ec2)
-            #waiter = client.get_waiter('instance_terminated')
-            #waiter.wait(InstanceIds = instance[0].id)
             list_ids.append(instance[0].id)
+
 
 t = Timer(30.0, check, args = (client, ec2))
 t.start()
