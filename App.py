@@ -77,9 +77,9 @@ class TarefasID(Resource):
             return{'result' : True}
 
 
+
 api.add_resource(Tarefas, '/Tarefas/', endpoint='tasks')
 api.add_resource(TarefasID, '/Tarefas/<int:id>', endpoint='task')
-
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)

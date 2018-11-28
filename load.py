@@ -24,17 +24,18 @@ def list_id(ec2, dic_id, list_ids):
                 dic_id[instance.id] = instance.public_ip_address
                 
     return dic_id, list_id
+
     
 ec2 = boto3.resource('ec2')
 dic_id, list_id = list_id(ec2, dic_id, list_ids)
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/', defaults={'path': ''}, methods = ["GET", "POST"])
+@app.route('/<path:path>', methods = ["GET", "POST"])
 def catch_all(path):
     ip = dic_id[random.choice(list_ids)]
-    edp = "http://" + ip + ":5000" + path
-    return redirect(edp)
+    edp = "http://" + ip + ":5000/" + path
+    return redirect(edp, code = 307)
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
