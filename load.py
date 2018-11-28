@@ -37,11 +37,19 @@ dic_id, list_id = list_id(ec2, dic_id, list_ids)
 
 @app.route('/', defaults={'path': ''}, methods = ["GET", "POST"])
 @app.route('/<path:path>', methods = ["GET", "POST"])
+
 def catch_all(path):
     ip = dic_id[random.choice(list_ids)]
     edp = "http://" + ip + ":5000/" + path
     return redirect(edp, code = 307)
 
+
+def import_key(client):
+    k = open("./teste/Lp.pub", "r")
+    response = client.import_key_pair(
+    KeyName = 'L2',
+    PublicKeyMaterial = k.read()
+)
 
 def create_instance(ec2):
     instances = ec2.create_instances(
@@ -50,7 +58,7 @@ def create_instance(ec2):
         MaxCount= 1,
         InstanceType = 't2.micro',
         SecurityGroups = ["APS_L"],
-        KeyName= "L",
+        KeyName= "L2",
         TagSpecifications=[
             {
                 'ResourceType': 'instance',
@@ -73,7 +81,6 @@ def create_instance(ec2):
     return instances
 
 
-
 def terminate_instances(client, _id):
     waiter = client.get_waiter('instance_terminated')
     client.terminate_instances(
@@ -90,7 +97,7 @@ def check(client, ec2, n_intances = 3):
                 rq = requests.get(edp)
                 if(rq.status_code == 200):
                     flag = True
-                    break      
+                    break
 
             except:
                 pass
