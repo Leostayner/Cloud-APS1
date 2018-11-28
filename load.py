@@ -29,24 +29,12 @@ ec2 = boto3.resource('ec2')
 dic_id, list_id = list_id(ec2, dic_id, list_ids)
 
 
-class GetAll(Resource):
-    def __init__(self):
-        self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('title', type=str, required = True, location='json')
-        self.reqparse.add_argument('description', type=str, default = "", location='json')
-    
-    def get(self):
-        ip = dic_id[random.choice(list_ids)]
-        edp = "http://" + ip + ":5000"
-        return redirect(edp)
-
-    def post(self):
-        ip = dic_id[random.choice(list_ids)]
-        edp = "http://" + ip + ":5000"
-        return redirect(edp, code = 307)
-
-
-api.add_resource(GetAll, '/GetAll/', endpoint= 'getall')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    ip = dic_id[random.choice(list_ids)]
+    edp = "http://" + ip + ":5000" + path
+    return redirect(edp)
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
