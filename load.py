@@ -114,7 +114,7 @@ def check(client, ec2, n_intances = 3):
         if (len(list_ids) < n_intances):
             instance = create_instance(ec2)
             list_ids.append(instance[0].id)
-            dic_id[instance[0].instance.public_ip_address]
+            dic_id[instance[0] = instance.public_ip_address]
 
 t = Timer(30.0, check, args = (client, ec2))
 t.start()
