@@ -93,7 +93,7 @@ def time_out():
 
 def check(client, ec2, list_ids, n_intances = 3):
     for _id in list_ids:
-
+        print(_id)
         edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
         
         flag = False
@@ -115,7 +115,7 @@ def check(client, ec2, list_ids, n_intances = 3):
             list_ids.append(instance[0].id)
             dic_id[instance[0].id] = instance[0].public_ip_address
 
-thread.start_new_thread ( check, args = [client, ec2, list_ids] )
+thread.start_new_thread(terget =  check, args = [client, ec2, list_ids] )
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
