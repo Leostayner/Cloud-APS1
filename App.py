@@ -78,7 +78,7 @@ class TarefasID(Resource):
 
 @app.route('/', methods = ["GET"])
 def healthcheck():
-    return 200
+    return {}, 200
 
 
 api.add_resource(Tarefas, '/Tarefas/', endpoint='tasks')

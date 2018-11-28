@@ -4,7 +4,7 @@ from flask_restful import Api, Resource, reqparse, fields, marshal, abort
 import random
 import boto3
 import requests
-
+from threading import Timer
 
 app = Flask(__name__)
 api = Api(app)
@@ -87,8 +87,8 @@ def check(client, ec2, n_intances = 3):
         flag = False     
         for time in range(1000):
             try:
-                requests.get(edp)
-                if(requests.text == 200):
+                rq = requests.get(edp)
+                if(rq.text == 200):
                     flag = True
                     break      
 
@@ -100,10 +100,10 @@ def check(client, ec2, n_intances = 3):
             list_ids.remove(_id)
 
         if (len(list_ids) < n_intances):
-            instance = create_instance(ec)
-            waiter = client.get_waiter('instance_terminated')
-            waiter.wait(InstanceIds = instance.id)
-            list_ids.append(instance.id)
+            instance = create_instance(ec2)
+            #waiter = client.get_waiter('instance_terminated')
+            #waiter.wait(InstanceIds = instance[0].id)
+            list_ids.append(instance[0].id)
 
 t = Timer(30.0, check, args = (client, ec2))
 t.start()
