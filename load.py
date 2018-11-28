@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template,redirect,  jsonify
 from flask_restful import Api, Resource, reqparse, fields, marshal, abort
 import random
 import boto3
@@ -26,7 +26,6 @@ def list_id(ec2, dic_id, list_ids):
     return dic_id, list_id
     
 ec2 = boto3.resource('ec2')
-#ec2 = boto3.resource('ec2', region_name = "us-east-1" , aws_access_key_id = ACCESS_KEY, aws_secret_access_key = SECRET_KEY)
 dic_id, list_id = list_id(ec2, dic_id, list_ids)
 
 
@@ -39,14 +38,14 @@ class GetAll(Resource):
     def get(self):
         ip = dic_id[random.choice(list_ids)]
         edp = "http://" + ip + ":5000"
-        request.get(edp)
+        return redirect(edp)
 
     def post(self):
         ip = dic_id[random.choice(list_ids)]
         edp = "http://" + ip + ":5000"
-        request.post(edp, json = request.json)
+        return redirect(edp, code = 307)
 
-            
+
 api.add_resource(GetAll, '/GetAll/', endpoint= 'getall')
 
 if __name__ == "__main__":
