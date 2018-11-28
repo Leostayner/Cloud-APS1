@@ -87,37 +87,35 @@ def terminate_instances(client, _id):
         InstanceIds = [_id]
     )
 
-def check(client, ec2, n_intances = 3):
-    for _id in list_ids:
-        try:
 
-            edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
+def time_out():
+
+
+def check(client, ec2, list_ids, n_intances = 3):
+    for _id in list_ids:
+
+        edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
+        
+        flag = False
+
+        try:
+            rq = requests.get(edp)
+            if(rq.status_code != 200):
+                flag = True
 
         except:
-            print("edp error")
+            pass
 
-        flag = False     
-        for time in range(1000):
-            try:
-                rq = requests.get(edp)
-                if(rq.status_code == 200):
-                    flag = True
-                    break
-
-            except:
-                pass
-        
-        if (not flag):
+        if(not flag):   
             terminate_instances(client, _id)
             list_ids.remove(_id)
 
         if (len(list_ids) < n_intances):
             instance = create_instance(ec2)
             list_ids.append(instance[0].id)
-            dic_id[instance[0].id] = instance[0].public_ip_address]
+            dic_id[instance[0].id] = instance[0].public_ip_address
 
-t = Timer(30.0, check, args = (client, ec2))
-t.start()
+thread.start_new_thread ( check, args = [client, ec2, list_ids] )
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
