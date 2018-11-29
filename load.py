@@ -5,6 +5,7 @@ import random
 import boto3
 import requests
 from threading import Timer
+import threading
 
 app = Flask(__name__)
 api = Api(app)
@@ -114,8 +115,9 @@ def check(client, ec2, list_ids, n_intances = 3):
         instance = create_instance(ec2)
         list_ids.append(instance[0].id)
         dic_id[instance[0].id] = instance[0].public_ip_address
+        sleep(2)
 
-thread.start_new_thread(terget =  check, args = [client, ec2, list_ids] ).start()
+threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
