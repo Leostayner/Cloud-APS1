@@ -90,6 +90,7 @@ def terminate_instances(client, _id):
 
 
 def check(client, ec2, list_ids, n_intances = 3):
+	print(list_ids)
 	while True:
 		if len(list_ids) > 0:
 		
@@ -113,13 +114,17 @@ def check(client, ec2, list_ids, n_intances = 3):
 
 		if (len(list_ids) < n_intances):
 			instance = create_instance(ec2)
+			new_id = instance[0].id
 			print(instance,"\n")
-			print(instance[0].id)
-			print(instance[0].public_ip_address)
-			list_ids.append(instance[0].id)
-			dic_id[instance[0].id] = instance[0].public_ip_address
+			print(new_id)
+			
+			list_ids.append(new_id)
+			print(len(list_ids), list_ids)
+			info_instance = instances.filter(InstanceIds = [new_id] )
+			dic_id[new_id] = info_instance[0].public_ip_address
+			print(dic_id)
 			waiter = client.get_waiter('instance_running')
-			waiter.wait(InstanceIds=[instance[0].id])
+			waiter.wait(InstanceIds=[new_id.id])
 
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
