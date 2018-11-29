@@ -89,30 +89,33 @@ def terminate_instances(client, _id):
 
 
 def check(client, ec2, list_ids, n_intances = 3):
-    for _id in list_ids:
-        print(_id)
-        edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
-        
-        flag = False
+    if len(list_ids > 0):
+    
+        for _id in list_ids:         
+            edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
+            
+            flag = False
+            try:
+                rq = requests.get(edp)
+                if(rq.status_code != 200):
+                    flag = True
 
-        try:
-            rq = requests.get(edp)
-            if(rq.status_code != 200):
-                flag = True
+            except:
+                pass
 
-        except:
-            pass
+            if(not flag):   
+                terminate_instances(client, _id)
+                list_ids.remove(_id)
+                instance = create_instance(ec2)
+                list_ids.append(instance[0].id)
+                dic_id[instance[0].id] = instance[0].public_ip_address
 
-        if(not flag):   
-            terminate_instances(client, _id)
-            list_ids.remove(_id)
+    if (len(list_ids) < n_intances):
+        instance = create_instance(ec2)
+        list_ids.append(instance[0].id)
+        dic_id[instance[0].id] = instance[0].public_ip_address
 
-        if (len(list_ids) < n_intances):
-            instance = create_instance(ec2)
-            list_ids.append(instance[0].id)
-            dic_id[instance[0].id] = instance[0].public_ip_address
-
-thread.start_new_thread(terget =  check, args = [client, ec2, list_ids] )
+thread.start_new_thread(terget =  check, args = [client, ec2, list_ids] ).start()
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)
