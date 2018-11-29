@@ -90,7 +90,7 @@ def terminate_instances(client, _id):
 
 
 def check(client, ec2, list_ids, n_intances = 3):
-    if len(list_ids > 0):
+    if len(list_ids) > 0:
     
         for _id in list_ids:         
             edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
@@ -98,7 +98,7 @@ def check(client, ec2, list_ids, n_intances = 3):
             flag = False
             try:
                 rq = requests.get(edp)
-                if(rq.status_code != 200):
+                if(rq.status_code == 200):
                     flag = True
 
             except:

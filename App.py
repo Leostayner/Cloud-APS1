@@ -76,9 +76,9 @@ class TarefasID(Resource):
             tasks.remove(task[0])
             return{'result' : True}
 
-@app.route('/', methods = ["GET"])
+@app.route('/healthcheck/', methods = ["GET"])
 def healthcheck():
-    return {}, 200
+    return "", 200
 
 
 api.add_resource(Tarefas, '/Tarefas/', endpoint='tasks')
