@@ -108,7 +108,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 					waiter   = client.get_waiter('instance_running')
 					waiterok = client.get_waiter('instance_status_ok')
 					waiter.wait(InstanceIds  = [new_id])
-					waiterok.wait(IntanceIds = [new_id])
+					waiterok.wait(InstanceIds = [new_id])
 
 					dic_id[new_id] = instance.public_ip_adress
 			
@@ -120,7 +120,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 			waiter   = client.get_waiter('instance_running')
 			waiterok = client.get_waiter('instance_status_ok')
 			waiter.wait(InstanceIds  = [new_id])
-			waiterok.wait(IntanceIds = [new_id])
+			waiterok.wait(InstanceIds = [new_id])
 
 			dic_id[new_id] = instance.public_ip_adress
 	
