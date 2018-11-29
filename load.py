@@ -88,10 +88,6 @@ def terminate_instances(client, _id):
 		InstanceIds = [_id]
 	)
 
-
-def delete_create_instante(ec2):
-
-
 def check(client, ec2, list_ids, n_intances = 3):
 	print(list_ids)
 	while True:
@@ -128,7 +124,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 
 			dic_id[new_id] = instance.public_ip_adress
 	
-	
+
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
 if __name__ == "__main__":
