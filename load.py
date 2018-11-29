@@ -96,29 +96,30 @@ def check(client, ec2, list_ids, n_intances = 3):
 			for _id in list_ids:         
 				edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
 				
-				rq = requests.get(edp)
-				print(rq.status_code != 200)	
-
 				try:
 					rq = requests.get(edp)
 					if(rq.status_code != 200):
 						raise ValueError("teste")
 
-				except:
-					list_ids.remove(_id)
-					print(list_ids)
-					
+				except:	
+					pass
 					# terminate_instances(client, _id)
 					# list_ids.remove(_id)
 					# instance = create_instance(ec2)
 					# list_ids.append(instance[0].id)
 					# dic_id[instance[0].id] = instance[0].public_ip_address
-		else:
-			print(list_ids)
-		# if (len(list_ids) < n_intances):
-		# 	instance = create_instance(ec2)
-		# 	list_ids.append(instance[0].id)
-		# 	dic_id[instance[0].id] = instance[0].public_ip_address
+					# waiter = client.get_waiter('instance_running')
+					# waiter.wait(InstanceIds=[instance[0].id])
+
+		if (len(list_ids) < n_intances):
+			instance = create_instance(ec2)
+			print(instance,"\n")
+			print(instance[0].id)
+			print(instance[0].public_ip_address)
+			list_ids.append(instance[0].id)
+			dic_id[instance[0].id] = instance[0].public_ip_address
+			waiter = client.get_waiter('instance_running')
+			waiter.wait(InstanceIds=[instance[0].id])
 
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
