@@ -88,9 +88,6 @@ def terminate_instances(client, _id):
     )
 
 
-def time_out():
-
-
 def check(client, ec2, list_ids, n_intances = 3):
     for _id in list_ids:
         print(_id)
