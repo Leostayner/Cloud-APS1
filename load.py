@@ -89,6 +89,9 @@ def terminate_instances(client, _id):
 	)
 
 
+def delete_create_instante(ec2):
+
+
 def check(client, ec2, list_ids, n_intances = 3):
 	print(list_ids)
 	while True:
@@ -103,30 +106,30 @@ def check(client, ec2, list_ids, n_intances = 3):
 						raise ValueError("teste")
 
 				except:	
-					pass
-					# terminate_instances(client, _id)
-					# list_ids.remove(_id)
-					# instance = create_instance(ec2)
-					# list_ids.append(instance[0].id)
-					# dic_id[instance[0].id] = instance[0].public_ip_address
-					# waiter = client.get_waiter('instance_running')
-					# waiter.wait(InstanceIds=[instance[0].id])
+					instance = create_instance(ec2)
+					new_id  = instance[0].id
 
-		if (len(list_ids) < n_intances):
-			instance = create_instance(ec2)
-			new_id = instance[0].id
-			print(instance,"\n")
-			print(new_id)
+					waiter   = client.get_waiter('instance_running')
+					waiterok = client.get_waiter('instance_status_ok')
+					waiter.wait(InstanceIds  = [new_id])
+					waiterok.wait(IntanceIds = [new_id])
+
+					dic_id[new_id] = instance.public_ip_adress
 			
-			list_ids.append(new_id)
-			print(len(list_ids), list_ids)
-			info_instance = instances.filter(InstanceIds = [new_id] )
-			dic_id[new_id] = info_instance[0].public_ip_address
-			print(dic_id)
-			waiter = client.get_waiter('instance_running')
-			waiter.wait(InstanceIds=[new_id.id])
+		if (len(list_ids) < n_intances):
+			
+			instance = create_instance(ec2)
+			new_id  = instance[0].id
 
+			waiter   = client.get_waiter('instance_running')
+			waiterok = client.get_waiter('instance_status_ok')
+			waiter.wait(InstanceIds  = [new_id])
+			waiterok.wait(IntanceIds = [new_id])
+
+			dic_id[new_id] = instance.public_ip_adress
+	
+	
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
 if __name__ == "__main__":
-	app.run(debug = True, host = "0.0.0.0", port = 5000)
+	app.run(debug = False, host = "0.0.0.0", port = 5000)
