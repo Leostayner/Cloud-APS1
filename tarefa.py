@@ -5,7 +5,7 @@ import json
 ip = input("Public IP: ")
 edp = "http://" + ip + ":5000/Tarefas/"
 
-elif (sys.argv[1]) == "tarefa adicionar":
+if (sys.argv[1]) == "tarefa adicionar":
     data = {"title": sys.argv[2], "description": sys.argv[3]}
    
     r = requests.post(edp, json = data)
