@@ -7,7 +7,8 @@ app = Flask(__name__)
 api = Api(app)
 
 config = {
-    'apiKey': "AIzaSyDXqCgLK3aI--94TpUkbV9Cg0N0hO0-5qw",
+        
+    "apiKey": "AIzaSyDXqCgLK3aI--94TpUkbV9Cg0N0hO0-5qw",
     'authDomain': "cloud-leo-83ccf.firebaseapp.com",
     'databaseURL': "https://cloud-leo-83ccf.firebaseio.com",
     'projectId': "cloud-leo-83ccf",
@@ -28,7 +29,8 @@ class Tarefas(Resource):
         super(Tarefas, self).__init__()
         
     def get(self):
-        return db.get()
+        print(db.get())
+        return db.child("Tarefas").get().val()
                                    
     def post(self):
         args = self.reqparse.parse_args()
@@ -37,8 +39,8 @@ class Tarefas(Resource):
             'title': args['title'],
             'description': args['description']
         }
-        return db.push(task)
-
+        db.child("Tarefas").set(task)
+        return db.child("Tarefas").get().val()
 
 # class TarefasID(Resource):
 #     def __init__(self):
