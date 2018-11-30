@@ -69,7 +69,7 @@ def create_instance(ec2):
         MaxCount= 1,
         InstanceType = 't2.micro',
         SecurityGroups = [SecurityGroup],
-        KeyName= "key_name",
+        KeyName= key_name,
         TagSpecifications=[
             {
                 'ResourceType': 'instance',

@@ -15,6 +15,12 @@ dic_id   = {}
 list_ids = []
 list_queue = []
 
+Owner    = input("Owner: ")
+Key_pub  = input("Public Key dir: ") 
+key_name = input("New key Name: ")
+SecurityGroup = input("Security Group Name: ")
+
+
 def list_id(ec2, dic_id, list_ids):
 	list_instances = ec2.instances.filter(Filters=[{
 	'Name': 'instance-state-name',
@@ -24,7 +30,7 @@ def list_id(ec2, dic_id, list_ids):
 		list_tags = (instance.tags)
 
 		for tag in list_tags:
-			if (tag["Key"] == "Owner") and (tag["Value"] == "Leonardo Medeiros"):
+			if (tag["Key"] == "Owner") and (tag["Value"] == Owner):
 				list_ids.append(str(instance.id))
 				dic_id[instance.id] = instance.public_ip_address
 				
@@ -48,9 +54,9 @@ def catch_all(path):
 
 
 def import_key(client):
-	k = open("./teste/Lp.pub", "r")
+	k = open(Key_pub, "r")
 	response = client.import_key_pair(
-	KeyName = 'L2',
+	KeyName = key_name,
 	PublicKeyMaterial = k.read()
 )
 
@@ -60,8 +66,8 @@ def create_instance(ec2):
 		MinCount= 1,
 		MaxCount= 1,
 		InstanceType = 't2.micro',
-		SecurityGroups = ["APS_L"],
-		KeyName= "L2",
+		SecurityGroups = [SecurityGroup],
+		KeyName= key_name,
 		TagSpecifications=[
 			{
 				'ResourceType': 'instance',
@@ -69,7 +75,7 @@ def create_instance(ec2):
 				'Tags': [
 					{
 						'Key': 'Owner',
-						'Value': "Leonardo Medeiros",
+						'Value': Owner,
 					},
 				]
 			},
