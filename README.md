@@ -3,7 +3,7 @@ Este projeto consiste em construir uma arquitetura de solução através de scri
 
 # Como Utilizar
 
-como primeira etapa crie uma public key através da sua private key, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las, essa tarefa pode ser realizada executando o seguinte comando:
+Como primeira etapa crie uma public key através da sua private key, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las, essa tarefa pode ser realizada executando o seguinte comando:
 
 ```
 ssh-keygen -y -f private_key > public_key.pub
@@ -48,4 +48,8 @@ E em seguida informar o public ip da intstancia que roda o load-balancer
 
 Os dados são armazenados em um firebase, para alterar o database dessa plataforma deve-se modificar a variavel config no arquivo app.py com suas informações.
 
-Para acessar sua web page via navegador pode-se utilizar : https://public_ip:5000/Tarefas/
+Para acessar sua web page via navegador pode-se utilizar : 
+
+```
+https://($public_ip):5000/Tarefas/
+```
