@@ -13,6 +13,7 @@ api = Api(app)
 
 dic_id   = {}
 list_ids = []
+list_queue = []
 
 def list_id(ec2, dic_id, list_ids):
 	list_instances = ec2.instances.filter(Filters=[{
@@ -82,28 +83,35 @@ def create_instance(ec2):
 	print("\nCreate Instance")
 	return instances
 
-def fila(_id, ip):
-	print("Timer iniciado para:", ip)
+def fila(_id):
+	print("Timer iniciado para:", _id)
 	global list_queue
 	global list_ids
+	global dic_id
 	
+	ip = ec2.Instance(_id).public_ip_address
+
 	edp = "http://" + ip + ":5000/" + "healthcheck/"
-				try:
-					rq = requests.get(edp)
-					if(rq.status_code != 200):
-						raise ValueError("teste")
+	try:
+		rq = requests.get(edp)
+		if(rq.status_code != 200):
+			raise ValueError("teste")
 					
-					list_ids.append(_id)
-					list_queue.remove(_id)
-	
-				except:	
-					client.terminate_instances(
-						InstanceIds = [_id]
-					)				
+		list_ids.append(_id)
+		list_queue.remove(_id)
+		dic_id[_id] = ip
+		print("Adicionado na lista")
+
+	except:	
+		client.terminate_instances(
+			InstanceIds = [_id]
+		)
+		list_queue.remove(_id)	
+		print("Removido da fila")			
 
 
 def check(client, ec2, list_ids, n_intances = 3):
-	list_queue = []
+	global dic_id
 	
 	while True:
 		if len(list_ids) > 0:
@@ -112,7 +120,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 				edp = "http://" + dic_id[_id] + ":5000/" + "healthcheck/"
 				
 				try:
-					rq = requests.get(edp)
+					rq = requests.get(edp, timeout = 5)
 					if(rq.status_code != 200):
 						raise ValueError("teste")
 
@@ -129,12 +137,12 @@ def check(client, ec2, list_ids, n_intances = 3):
 					new_instance = ec2.Instance(new_id)
 					
 					list_queue.append(new_id)
-					dic_id[new_id] = new_instance.public_ip_address
+				
 					
-					t = Timer(300.0, fila, args = [new_id, new_instance.public_ip_address])
+					t = Timer(240.0, fila, args = [new_id])
 					t.start()
 					
-					print("Instancia IP: {0}".format(dic_id[new_id]))
+					print("Instancia ID: {0}".format(new_id))
 					
 
 		if (len(list_ids) + len(list_queue) < n_intances):
@@ -144,12 +152,11 @@ def check(client, ec2, list_ids, n_intances = 3):
 			new_instance = ec2.Instance(new_id)
 			
 			list_queue.append(new_id)
-			dic_id[new_id] = new_instance.public_ip_address
-			
-			t = threading.Timer(300.0, fila, args = [new_id, new_instance.public_ip_address])
+		
+			t = threading.Timer(240.0, fila, args = [new_id])
 			t.start()
 
-			print("Instancia IP: {0}".format(dic_id[new_id]))
+			print("Instancia ID: {0}".format(new_id))
 								
 
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
