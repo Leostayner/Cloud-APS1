@@ -117,7 +117,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 			
 		if (len(list_ids) < n_intances):
 			
-			list_id.remove(_id)
+			list_ids.remove(_id)
 			new_instance = create_instance(ec2)
 			new_id  = new_instance[0].id
 
