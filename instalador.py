@@ -83,8 +83,8 @@ def create_instance(ec2):
             }          
         ],
         UserData = """#!/bin/bash
-        git clone https://github.com/Leostayner/Cloud-APS1
-        cd /Cloud-APS1  
+        git clone https://github.com/Leostayner/Cloud-Projeto.git
+        cd /Cloud-Projeto  
         . install_load.sh
         """
     )
