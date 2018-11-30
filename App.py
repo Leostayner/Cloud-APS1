@@ -35,41 +35,12 @@ class Tarefas(Resource):
     def post(self):
         args = self.reqparse.parse_args()
         task = {
-            'id': 1,
             'title': args['title'],
             'description': args['description']
         }
         db.child("Tarefas").set(task)
         return db.child("Tarefas").get().val()
 
-# class TarefasID(Resource):
-#     def __init__(self):
-#         self.reqparse = reqparse.RequestParser()
-#         self.reqparse.add_argument('title', type=str, required = True, location='json')
-#         self.reqparse.add_argument('description', type=str, default = "", location='json')
-        
-#     def get(self, id):
-#         task = [task for task in tasks if task['id'] == id]
-#         if len(task) == 0:
-#             abort(404)
-#         return {'task' : marshal(task[0], task_fields)}
-
-#     def put(self, id):
-#         task = [task for task in tasks if task['id'] == id]
-#         if len(task) == 0:
-#             abort(404)
-#         task = task[0]
-#         args = self.reqparse.parse_args()
-#         for key, value in args.items():
-#             if value is not None:
-#                 task[key] = value
-# waiter = client.get_waiter('instance_terminated')
-#     def delete(self, id):
-#         task = [task for task in tasks if task['id'] == id]
-#         if len(task) == 0:
-#             abort(404)
-#             tasks.remove(task[0])
-#             return{'result' : True}
 
 @app.route('/healthcheck/', methods = ["GET"])
 def healthcheck():
@@ -77,7 +48,6 @@ def healthcheck():
 
 
 api.add_resource(Tarefas, '/Tarefas/', endpoint='tasks')
-# api.add_resource(TarefasID, '/Tarefas/<int:id>', endpoint='task')
 
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 5000)

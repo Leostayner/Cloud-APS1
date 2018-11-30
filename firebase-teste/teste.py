@@ -13,8 +13,9 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 
-db.child("Tarefas").set({"id": 1, "nome": "unificar", "description": "teste-inicial"})
-a = db.child("Tarefas").get()
+db.child("Tarefas").set({"id": 1, "nome": "undificar", "description": "teste-inicial"})
+
+l = db.child("Tarefas").get().val()
+#a = [db.get().val() for value in db.get()]
 #db.child("tarefas").remove
-l = a.val()
 print(l)

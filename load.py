@@ -6,6 +6,7 @@ import boto3
 import requests
 from threading import Timer
 import threading
+import time
 
 app = Flask(__name__)
 api = Api(app)
@@ -102,34 +103,44 @@ def check(client, ec2, list_ids, n_intances = 3):
 						raise ValueError("teste")
 
 				except:	
+					print("Error: ",edp)
 					list_ids.remove(_id)
 					new_instance = create_instance(ec2)
 					new_id  = new_instance[0].id
-
+					new_instance = ec2.Instance(new_id)
+					
 					waiter   = client.get_waiter('instance_running')
 					waiterok = client.get_waiter('instance_status_ok')
+					
 					waiter.wait(InstanceIds  = [new_id])
 					waiterok.wait(InstanceIds = [new_id])
 					
-					print(new_instance, new_id)
+					time.sleep(5)	
+					
 					list_ids.append(new_id)
-					dic_id[new_id] = new_instance.public_ip_adress
-			
+					dic_id[new_id] = new_instance.public_ip_address
+					print("Sucesso ao criar instancia IP: {0}".format(dic_id[new_id]))
+					
+
 		if (len(list_ids) < n_intances):
 			
-			list_ids.remove(_id)
+		
 			new_instance = create_instance(ec2)
 			new_id  = new_instance[0].id
-
+			
+			new_instance = ec2.Instance(new_id)
 			waiter   = client.get_waiter('instance_running')
 			waiterok = client.get_waiter('instance_status_ok')
+			
 			waiter.wait(InstanceIds  = [new_id])
 			waiterok.wait(InstanceIds = [new_id])
 			
-			print(new_instance, new_id)
+			time.sleep(5)		
+			
 			list_ids.append(new_id)
-			dic_id[new_id] = new_instance.public_ip_adress
-	
+			dic_id[new_id] = new_instance.public_ip_address
+			print("Sucesso ao criar instancia IP: {0}".format(dic_id[new_id]))
+								
 
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
 
