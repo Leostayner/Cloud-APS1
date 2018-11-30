@@ -68,7 +68,7 @@ class TarefasID(Resource):
         for key, value in args.items():
             if value is not None:
                 task[key] = value
-
+waiter = client.get_waiter('instance_terminated')
     def delete(self, id):
         task = [task for task in tasks if task['id'] == id]
         if len(task) == 0:

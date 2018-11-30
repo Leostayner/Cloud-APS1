@@ -78,7 +78,7 @@ def create_instance(ec2):
 		. install.sh
 		"""
 	)
-	print("Create Instance")
+	print("\nCreate Instance")
 	return instances
 
 
@@ -102,27 +102,33 @@ def check(client, ec2, list_ids, n_intances = 3):
 						raise ValueError("teste")
 
 				except:	
-					instance = create_instance(ec2)
-					new_id  = instance[0].id
+					list_ids.remove(_id)
+					new_instance = create_instance(ec2)
+					new_id  = new_instance[0].id
 
 					waiter   = client.get_waiter('instance_running')
 					waiterok = client.get_waiter('instance_status_ok')
 					waiter.wait(InstanceIds  = [new_id])
 					waiterok.wait(InstanceIds = [new_id])
-
-					dic_id[new_id] = instance.public_ip_adress
+					
+					print(new_instance, new_id)
+					list_ids.apped(new_id)
+					dic_id[new_id] = new_instance.public_ip_adress
 			
 		if (len(list_ids) < n_intances):
 			
-			instance = create_instance(ec2)
-			new_id  = instance[0].id
+			list_id.remove(_id)
+			new_instance = create_instance(ec2)
+			new_id  = new_instance[0].id
 
 			waiter   = client.get_waiter('instance_running')
 			waiterok = client.get_waiter('instance_status_ok')
 			waiter.wait(InstanceIds  = [new_id])
 			waiterok.wait(InstanceIds = [new_id])
-
-			dic_id[new_id] = instance.public_ip_adress
+			
+			print(new_instance, new_id)
+			list_ids.apped(new_id)
+			dic_id[new_id] = new_instance.public_ip_adress
 	
 
 threading.Thread(target =  check, args = [client, ec2, list_ids] ).start()
