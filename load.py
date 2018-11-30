@@ -19,6 +19,7 @@ Owner    = input("Owner: ")
 Key_pub  = input("Public Key dir: ") 
 key_name = input("New key Name: ")
 SecurityGroup = input("Security Group Name: ")
+Instance_numbers = input("Instance numbers: ")
 
 
 def list_id(ec2, dic_id, list_ids):
@@ -63,8 +64,8 @@ def import_key(client):
 def create_instance(ec2):
 	instances = ec2.create_instances(
 		ImageId='ami-0ac019f4fcb7cb7e6',
-		MinCount= 1,
-		MaxCount= 1,
+		MinCount= Instance_numbers,
+		MaxCount= Instance_numbers,
 		InstanceType = 't2.micro',
 		SecurityGroups = [SecurityGroup],
 		KeyName= key_name,
