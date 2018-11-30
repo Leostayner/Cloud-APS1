@@ -64,8 +64,8 @@ def import_key(client):
 def create_instance(ec2):
 	instances = ec2.create_instances(
 		ImageId='ami-0ac019f4fcb7cb7e6',
-		MinCount= int(Instance_numbers),
-		MaxCount= int(Instance_numbers),
+		MinCount= 1,
+		MaxCount= 1,
 		InstanceType = 't2.micro',
 		SecurityGroups = [SecurityGroup],
 		KeyName= key_name,
