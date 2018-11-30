@@ -94,10 +94,7 @@ def create_instance(ec2):
 
 def check_terminate(ec2, client):
     print("Check Treminate")
-    list_instances = ec2.instances.filter(Filters=[{
-    'Name': 'instance-state-name',
-    'Values': ['running']}])
-    
+    list_instances = ec2.instances.all()
     list_id = []
     
     for instance in list_instances:

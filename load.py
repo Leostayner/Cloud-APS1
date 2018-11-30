@@ -64,8 +64,8 @@ def import_key(client):
 def create_instance(ec2):
 	instances = ec2.create_instances(
 		ImageId='ami-0ac019f4fcb7cb7e6',
-		MinCount= Instance_numbers,
-		MaxCount= Instance_numbers,
+		MinCount= int(Instance_numbers),
+		MaxCount= int(Instance_numbers),
 		InstanceType = 't2.micro',
 		SecurityGroups = [SecurityGroup],
 		KeyName= key_name,
@@ -117,7 +117,7 @@ def fila(_id):
 		print("Removido da fila")			
 
 
-def check(client, ec2, list_ids, n_intances = 3):
+def check(client, ec2, list_ids):
 	global dic_id
 	
 	while True:
@@ -152,7 +152,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 					print("Instancia ID: {0}".format(new_id))
 					
 
-		if (len(list_ids) + len(list_queue) < n_intances):
+		if (len(list_ids) + len(list_queue) < int(Instance_numbers)):
 			new_instance = create_instance(ec2)
 			new_id  = new_instance[0].id
 			
