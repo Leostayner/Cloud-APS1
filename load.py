@@ -112,7 +112,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 					waiterok.wait(InstanceIds = [new_id])
 					
 					print(new_instance, new_id)
-					list_ids.apped(new_id)
+					list_ids.append(new_id)
 					dic_id[new_id] = new_instance.public_ip_adress
 			
 		if (len(list_ids) < n_intances):
@@ -127,7 +127,7 @@ def check(client, ec2, list_ids, n_intances = 3):
 			waiterok.wait(InstanceIds = [new_id])
 			
 			print(new_instance, new_id)
-			list_ids.apped(new_id)
+			list_ids.append(new_id)
 			dic_id[new_id] = new_instance.public_ip_adress
 	
 
