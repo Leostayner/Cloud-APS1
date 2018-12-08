@@ -3,10 +3,10 @@ Este projeto consiste em construir uma arquitetura de solução através de scri
 
 # Como Utilizar
 
-Como primeira etapa crie uma public key através da sua private key, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las, essa tarefa pode ser realizada executando o seguinte comando:
+Como primeira etapa crie um par de chaves, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las, essa tarefa pode ser realizada executando o seguinte comando:
 
 ```
-ssh-keygen -y -f private_key > public_key.pub
+ssh-keygen -t rsa
 ```
 
 Posteriormente deve-se rodar o script instalador.py, este é responsável por configurar todas os componentes necessários para o funcionamento da sua arquitetura como :
