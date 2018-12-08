@@ -16,7 +16,6 @@ list_ids = []
 list_queue = []
 
 Owner    = input("Owner: ")
-Key_pub  = input("Public Key dir: ") 
 key_name = input("Imported key Name: ")
 SecurityGroup = input("Security Group Name: ")
 Instance_numbers = input("Instance numbers: ")
@@ -52,14 +51,6 @@ def catch_all(path):
 	ip = dic_id[random.choice(list_ids)]
 	edp = "http://" + ip + ":5000/" + path
 	return redirect(edp, code = 307)
-
-
-def import_key(client):
-	k = open(Key_pub, "r")
-	response = client.import_key_pair(
-	KeyName = key_name,
-	PublicKeyMaterial = k.read()
-)
 
 def create_instance(ec2):
 	instances = ec2.create_instances(
