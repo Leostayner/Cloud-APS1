@@ -3,7 +3,19 @@ Este projeto consiste em construir uma arquitetura de solução através de scri
 
 # Como Utilizar
 
-Como primeira etapa crie um par de chaves, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las, essa tarefa pode ser realizada executando o seguinte comando:
+Como primeira etapa clone este repositorio, é necessario instalar as dependencias para executar os scripts desse projeto, para tal execute o seguinte comando:
+
+```
+chmod 400 install_load.sh
+./install_load.sh
+```
+
+Em seguida executeo o comando aws configure, para linkar os comandos da maquina a sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
+```
+aws confiure
+```
+
+Crie um par de chaves, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las (Não divulgue essas chaves), essa tarefa pode ser realizada executando o seguinte comando:
 
 ```
 ssh-keygen -t rsa
@@ -17,7 +29,7 @@ Criação do Security Group
 
 Inicialização de uma instancia, que utiliza os componentes anteriores, responsável por executar o load balancer.
 
-Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia é necessário executar o comando aws configure, para linkar os comandos da maquina a sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
+Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia é necessário executar novamente o comando aws configure
 
 Em seguida deve-se acessar a pasta com os scripts que são clonados na inicialização da instancia, para isso pode-se executar os seguintes comandos:
 
