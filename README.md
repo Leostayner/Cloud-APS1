@@ -12,7 +12,7 @@ chmod 400 install_load.sh
 
 Em seguida execute o comando aws configure, para linkar os comandos da maquina à sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
 ```
-aws confiure
+aws configure
 ```
 
 Crie um par de chaves, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las (Não divulgue essas chaves), essa tarefa pode ser realizada executando o seguinte comando:
