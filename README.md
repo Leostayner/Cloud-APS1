@@ -20,7 +20,7 @@ Crie um par de chaves, a public key sera utilizada para configurar as suas insta
 ```
 ssh-keygen -t rsa
 ```
-Por default as chaves serão salvas no diretorio /home/.ssh/, esta pasta é oculta, caso tenha armazenado as chaves nesse local deve-se habilitar a opção de visualizar pastas ocultas.
+Por default as chaves serão salvas no diretorio /home/.ssh/, que é uma pasta oculta, depois de criar o par de chaves deve-se executar o comando chmod 400 para estas.
 
 Posteriormente deve-se rodar o script instalador.py, este é responsável por configurar todas os componentes necessários para o funcionamento da sua arquitetura como :
 
