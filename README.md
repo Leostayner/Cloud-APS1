@@ -30,7 +30,7 @@ Criação do Security Group
 
 Inicialização de uma instancia, que utiliza os componentes anteriores, responsável por executar o load balancer.
 
-Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia é necessário executar novamente o comando aws configure
+Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia, deve-se executar os commandos como root, execute o comando aws configure
 
 Em seguida deve-se acessar a pasta com os scripts que são clonados na inicialização da instancia, para isso pode-se executar os seguintes comandos:
 
