@@ -28,7 +28,7 @@ Importação da key pair
 
 Criação do Security Group
 
-Inicialização de uma instancia, que utiliza os componentes anteriores, responsável por executar o load balancer.
+Inicialização de uma instancia com tag "$nome" LB, que utiliza os componentes anteriores, responsável por executar o load balancer.
 
 Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia, deve-se executar os commandos como root, execute o comando aws configure
 
