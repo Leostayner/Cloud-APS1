@@ -12,7 +12,7 @@ chmod 400 install_load.sh
 
 Em seguida execute o comando aws configure, para linkar os comandos da maquina à sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
 ```
-aws confiure
+aws configure
 ```
 
 Crie um par de chaves, a public key sera utilizada para configurar as suas instancias, e a private key pode ser usada para acessá-las (Não divulgue essas chaves), essa tarefa pode ser realizada executando o seguinte comando:
@@ -30,7 +30,7 @@ Criação do Security Group
 
 Inicialização de uma instancia, que utiliza os componentes anteriores, responsável por executar o load balancer.
 
-Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia é necessário executar novamente o comando aws configure
+Apos executar o script instalador.py deve-se acessar essa instancia manualmente via ssh com sua private key, que foi utilizada no processo de criação da public key, uma vez dentro da instancia, deve-se executar os commandos como root, execute o comando aws configure
 
 Em seguida deve-se acessar a pasta com os scripts que são clonados na inicialização da instancia, para isso pode-se executar os seguintes comandos:
 
