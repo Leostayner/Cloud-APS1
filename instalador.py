@@ -2,7 +2,7 @@ import boto3
 
 Owner    = input("Owner: ")
 Key_pub  = input("Public Key dir: ") 
-key_name = input("New key Name: ")
+key_name = input("Import key Name: ")
 SecurityGroup = input("Security Group Name: ")
 
 def save(name, data):

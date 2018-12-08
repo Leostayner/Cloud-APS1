@@ -17,7 +17,7 @@ list_queue = []
 
 Owner    = input("Owner: ")
 Key_pub  = input("Public Key dir: ") 
-key_name = input("New key Name: ")
+key_name = input("Imported key Name: ")
 SecurityGroup = input("Security Group Name: ")
 Instance_numbers = input("Instance numbers: ")
 
