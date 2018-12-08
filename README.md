@@ -36,7 +36,7 @@ Em seguida deve-se acessar a pasta com os scripts que são clonados na inicializ
 
 ```
 cd /
-cd / Cloud-Projeto
+cd Cloud-Projeto/
 python3 load.py
 ```
 
