@@ -10,7 +10,7 @@ chmod 400 install_load.sh
 ./install_load.sh
 ```
 
-Em seguida executeo o comando aws configure, para linkar os comandos da maquina a sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
+Em seguida execute o comando aws configure, para linkar os comandos da maquina à sua conta da aws, informando obrigatoriamente sua Access key ID, Secret access key e region, as outras informações requisitadas durante esse processo são opcionais.
 ```
 aws confiure
 ```
@@ -20,6 +20,7 @@ Crie um par de chaves, a public key sera utilizada para configurar as suas insta
 ```
 ssh-keygen -t rsa
 ```
+Por default as chaves serão salvas no diretorio /home/.ssh/, esta pasta é oculta, caso tenha armazenado as chaves nesse local deve-se habilitar a opção de visualizar pastas ocultas.
 
 Posteriormente deve-se rodar o script instalador.py, este é responsável por configurar todas os componentes necessários para o funcionamento da sua arquitetura como :
 
